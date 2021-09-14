@@ -1,32 +1,33 @@
+//Hårdkoda användaruppgifter
 const userName = "test";
 const password = "1234";
 
+//hämta element från index
 let userNameInput = document.getElementById('userName');
 let passwordInput = document.getElementById('password');
 let logInButton = document.getElementById('logInBtn');
 
+//Kollar ifall användaruppgifter är sparade
 checkCredentials();
 
+//hämta input, validera och skicka vidare till korrekt sida.
 logInButton.addEventListener("click", function () {
     let getUserName = userNameInput.value;
     let getPassword = passwordInput.value;
     
     if (getUserName === userName && getPassword === password) {
+        localStorage.setItem("username", getUserName);
         LogInPage();
     } else if (getUserName !== userName || getPassword !== password) {
         errorPage();
-
     };
-
-    localStorage.setItem("username", getUserName);
-    localStorage.setItem("password", getPassword);
 
 });
 
 function checkCredentials() {
 
     checkUsername = localStorage.getItem("username");
-    checkPassword = localStorage.getItem("password");
+    checkPassword = password;
 
     if (checkUsername === userName && checkPassword === password) {
         LogInPage();
@@ -34,6 +35,7 @@ function checkCredentials() {
 
 };
 
+//Skapar upp samtliga element till login sidan och döljer originalsidan.
 function LogInPage() {
     let getOriginalPage = document.getElementById('OriginalPage');
     getOriginalPage.style.display = "none";
@@ -67,24 +69,21 @@ function LogInPage() {
     button.id = "logOut";
     div.appendChild(button);
 
+    //Tar bort username i LS och validerar ifall det är tomt -> VB till originalsidan.
     let myLogOut = document.getElementById('logOut');
-
     myLogOut.addEventListener("click", function () {
-
+        
         localStorage.removeItem("username");
-        localStorage.removeItem("password");
         let checkUsername = localStorage.getItem("username");
-        let checkPassword = localStorage.getItem("password");
-
-        if (checkUsername !== userName && checkPassword !== password) {
-
+        
+        if (checkUsername !== userName) {
             standardPage();
         };
 
     });
 };
 
-
+//Skapar upp sidan för fel användaruppgifter och döljer originalsidan.
 function errorPage() {
     
     let getOriginalPage = document.getElementById('OriginalPage');
@@ -107,13 +106,13 @@ function errorPage() {
     createErrorPage.appendChild(backToOriginal);
 
     backToOriginal.addEventListener("click", function() {
-
+        
         standardPage();
 
     });
 }
 
-
+//Visar originalsidan igen, tar bort login och error -sidan.
 function standardPage() {
     
     let getOriginalPage = document.getElementById('OriginalPage');
