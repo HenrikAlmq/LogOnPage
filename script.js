@@ -10,12 +10,13 @@ checkCredentials();
 logInButton.addEventListener("click", function () {
     let getUserName = userNameInput.value;
     let getPassword = passwordInput.value;
-
-    if (getUserName == userName && getPassword == password) {
+    
+    if (getUserName === userName && getPassword === password) {
         LogInPage();
-    } else if (checkUsername != userName && checkPassword != password) {
-        errorLogIn();
-    }
+    } else if (getUserName !== userName || getPassword !== password) {
+        errorPage();
+
+    };
 
 
     localStorage.setItem("username", getUserName);
@@ -29,33 +30,33 @@ function checkCredentials() {
     checkUsername = localStorage.getItem("username");
     checkPassword = localStorage.getItem("password");
 
-    if (checkUsername == userName && checkPassword == password) {
+    if (checkUsername === userName && checkPassword === password) {
         LogInPage();
-    }
+    } 
 
 
 };
 
 
 function LogInPage() {
-    originalPage = document.getElementById('OriginalPage');
-    originalPage.style.display = "none";
+    let getOriginalPage = document.getElementById('OriginalPage');
+    getOriginalPage.style.display = "none";
 
-    div = document.createElement('div');
+    let div = document.createElement('div');
     div.style.backgroundColor = "gray";
     div.id = "LogInPage";
     document.body.appendChild(div);
 
 
-    header = document.createElement('h1');
-    header.innerText = "Du är nu inloggad";
+    let header = document.createElement('h1');
+    header.innerText = "Logged in";
     div.appendChild(header);
 
-    para = document.createElement('p');
-    para.innerText = "Nedan finns ett youtube-klipp att kika på";
+    let para = document.createElement('p');
+    para.innerText = "Below is a Youtube clip of me playing golf.";
     div.appendChild(para);
 
-    youtube = document.createElement('iframe');
+    let youtube = document.createElement('iframe');
     youtube.style.width = "560px";
     youtube.style.height = "315px";
     youtube.src = "https://www.youtube.com/embed/eECwH-9lYnI";
@@ -64,20 +65,24 @@ function LogInPage() {
     youtube.style.allow = "accelerometer";
     div.appendChild(youtube);
 
-    button = document.createElement('BUTTON');
+    let button = document.createElement('BUTTON');
     button.type = "button";
     button.style.border = "1px solid black";
-    button.innerText = "logga ut";
+    button.innerText = "Log out";
     button.id = "logOut";
     div.appendChild(button);
 
-    myLogOut = document.getElementById('logOut');
+    let myLogOut = document.getElementById('logOut');
 
     myLogOut.addEventListener("click", function () {
+
+
         localStorage.removeItem("username");
         localStorage.removeItem("password");
+        let checkUsername = localStorage.getItem("username");
+        let checkPassword = localStorage.getItem("password");
 
-        if (checkUsername != userName && checkPassword != password) {
+        if (checkUsername !== userName && checkPassword !== password) {
 
             standardPage();
         };
@@ -85,25 +90,53 @@ function LogInPage() {
     });
 };
 
-function standardPage() {
 
-    let standard = document.getElementById('OriginalPage');
-    standard.style.display = "initial";
-    let standardPage = document.getElementById('LogInPage');
-    standardPage.style.display = "none";
+function errorPage() {
+    
+    let getOriginalPage = document.getElementById('OriginalPage');
+    getOriginalPage.style.display = "none";
 
+    let createErrorPage = document.createElement('div');
+    createErrorPage.style.backgroundColor = "gray";
+    createErrorPage.id = "errorPage";
+    document.body.appendChild(createErrorPage);
+
+    let errorHeader = document.createElement('h1');
+    errorHeader.innerText = "Wrong username or password";
+    createErrorPage.appendChild(errorHeader);
+
+    let backToOriginal = document.createElement('BUTTON');
+    backToOriginal.type = "button";
+    backToOriginal.style.border = "1px solid black";
+    backToOriginal.innerText = "Back to login page";
+    backToOriginal.id = "backToOriginal";
+    createErrorPage.appendChild(backToOriginal);
+
+    backToOriginal.addEventListener("click", function() {
+
+        standardPage();
+
+    });
 }
 
-function errorLogIn() {
-    div = document.createElement('div');
-    div.id = "ErrorLogIn";
-    document.body.appendChild(div);
+
+function standardPage() {
     
+    let getOriginalPage = document.getElementById('OriginalPage');
+    getOriginalPage.style.display = "initial";
 
-    header = document.createElement('h2');
-    header.innerText = "Fel vid inloggning, vänligen kontrollera användarnamn och lösenord";
-    div.appendChild(header);
+    let logInPage = document.getElementById('LogInPage');
+    let errorPage = document.getElementById('errorPage');
 
+    if(logInPage !== null){
+        logInPage.remove();
+    }else if(errorPage !== null) {
+        errorPage.remove();
+    };
+
+    
 };
+
+
 
 
