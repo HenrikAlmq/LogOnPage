@@ -18,10 +18,8 @@ logInButton.addEventListener("click", function () {
 
     };
 
-
     localStorage.setItem("username", getUserName);
     localStorage.setItem("password", getPassword);
-
 
 });
 
@@ -34,9 +32,7 @@ function checkCredentials() {
         LogInPage();
     } 
 
-
 };
-
 
 function LogInPage() {
     let getOriginalPage = document.getElementById('OriginalPage');
@@ -46,7 +42,6 @@ function LogInPage() {
     div.style.backgroundColor = "gray";
     div.id = "LogInPage";
     document.body.appendChild(div);
-
 
     let header = document.createElement('h1');
     header.innerText = "Logged in";
@@ -75,7 +70,6 @@ function LogInPage() {
     let myLogOut = document.getElementById('logOut');
 
     myLogOut.addEventListener("click", function () {
-
 
         localStorage.removeItem("username");
         localStorage.removeItem("password");
@@ -134,7 +128,6 @@ function standardPage() {
         errorPage.remove();
     };
 
-    
 };
 
 
