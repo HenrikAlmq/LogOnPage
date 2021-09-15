@@ -17,7 +17,7 @@ logInButton.addEventListener("click", function () {
     
     if (getUserName === userName && getPassword === password) {
         localStorage.setItem("username", getUserName);
-        LogInPage();
+        logInPage();
     } else if (getUserName !== userName || getPassword !== password) {
         errorPage();
     };
@@ -25,18 +25,17 @@ logInButton.addEventListener("click", function () {
 });
 
 function checkCredentials() {
-
-    checkUsername = localStorage.getItem("username");
-    checkPassword = password;
-
-    if (checkUsername === userName && checkPassword === password) {
-        LogInPage();
+    
+    let checkUsername = localStorage.getItem("username");
+    
+    if (checkUsername === userName) {
+        logInPage();
     } 
 
 };
 
-//Skapar upp samtliga element till login sidan och döljer originalsidan.
-function LogInPage() {
+//Skapar upp samtliga element till loginsidan och döljer originalsidan.
+function logInPage() {
     let getOriginalPage = document.getElementById('OriginalPage');
     getOriginalPage.style.display = "none";
 
